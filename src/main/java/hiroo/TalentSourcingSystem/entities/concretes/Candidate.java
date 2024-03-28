@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Table(name = "Candidate")
 @Data
 @AllArgsConstructor
@@ -23,11 +24,11 @@ public class Candidate {
     private String surname;
 
     @Column(name = "candidate_phoneNumber")
-    private int phoneNumber;
+    private String phoneNumber;
 
     @Column(name = "candidate_email")
     private String email;
+    @Column(name="candidate_status")
+    private int status;
 
-    @Column(name = "candidate_status")
-    private int status; //1)sourced 2)interviewing 3)offer sent 4)hired
 }

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class CreateCandidateRequest {
     private String name;
     private String surname;
-    private int phoneNumber;
+    private String phoneNumber;
     private String email;
     private int status;
 }

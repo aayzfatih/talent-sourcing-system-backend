@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/candidates")
 @AllArgsConstructor
 public class CandidatesController {
@@ -19,7 +20,7 @@ public class CandidatesController {
     public List<GetAllCandidatesResponse>getAllCandidatesResponses(){
         return this.candidateService.getAll();
     }
-    @PostMapping("/create")
+    @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public void add(@RequestBody CreateCandidateRequest createCandidateRequest){
         this.candidateService.add(createCandidateRequest);
