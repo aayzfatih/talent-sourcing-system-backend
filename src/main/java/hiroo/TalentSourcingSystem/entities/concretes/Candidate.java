@@ -28,7 +28,9 @@ public class Candidate {
 
     @Column(name = "candidate_email")
     private String email;
+    public enum Status{Sourced,Interviewing,Offer_Sent,Hired}
     @Column(name="candidate_status")
-    private int status;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
 }

@@ -4,8 +4,10 @@ import hiroo.TalentSourcingSystem.business.abstracts.CandidateService;
 import hiroo.TalentSourcingSystem.business.requests.CreateCandidateRequest;
 import hiroo.TalentSourcingSystem.business.requests.UpdateCandidateRequest;
 import hiroo.TalentSourcingSystem.business.responses.GetAllCandidatesResponse;
+import hiroo.TalentSourcingSystem.entities.concretes.Candidate;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +21,10 @@ public class CandidatesController {
     @GetMapping()
     public List<GetAllCandidatesResponse>getAllCandidatesResponses(){
         return this.candidateService.getAll();
+    }
+    @GetMapping("/status")
+    public ResponseEntity<Candidate.Status[]>getStatusValues(){
+        return ResponseEntity.ok(Candidate.Status.values());
     }
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)

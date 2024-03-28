@@ -12,5 +12,5 @@ public class CreateCandidateRequest {
     private String surname;
     private String phoneNumber;
     private String email;
-    private int status;
+    private String status;
 }
