@@ -8,6 +8,8 @@ import hiroo.TalentSourcingSystem.business.responses.GetAllCandidatesResponse;
 import hiroo.TalentSourcingSystem.core.utilities.results.DataResult;
 import hiroo.TalentSourcingSystem.entities.concretes.Candidate;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +23,8 @@ import java.util.List;
 public class CandidatesController {
     private CandidateService candidateService;
     @GetMapping()
-    public DataResult<List<GetAllCandidatesResponse>> getAllCandidatesResponses(){
-        return this.candidateService.getAll();
+    public DataResult<List<GetAllCandidatesResponse>> getAllCandidatesResponses(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+        return this.candidateService.getAll(page,size);
     }
     @GetMapping("/status")
     public ResponseEntity<Candidate.Status[]>getStatusValues(){

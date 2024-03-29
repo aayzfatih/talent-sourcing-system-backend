@@ -11,6 +11,8 @@ import hiroo.TalentSourcingSystem.core.utilities.results.SuccessDataResult;
 import hiroo.TalentSourcingSystem.dataAccess.abstracts.CandidateRepository;
 import hiroo.TalentSourcingSystem.entities.concretes.Candidate;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,12 +24,13 @@ public class CandidateManager implements CandidateService {
     private CandidateRepository candidateRepository;
     private ModelMapperService modelMapperService;
     @Override
-    public DataResult<List<GetAllCandidatesResponse>> getAll() {
-        List<Candidate>candidates=this.candidateRepository.findAll();
-        List<GetAllCandidatesResponse>responses=candidates.stream().map(candidate ->this.modelMapperService.forResponse()
-                .map(candidate, GetAllCandidatesResponse.class) ).collect(Collectors.toList());
-        SuccessDataResult<List<GetAllCandidatesResponse>> successDataResult=new SuccessDataResult<>(responses,"Get All Candidates");
-        return successDataResult;
+    public DataResult<List<GetAllCandidatesResponse>> getAll(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        List<Candidate> candidates = candidateRepository.findAll(pageable).getContent();
+        List<GetAllCandidatesResponse> responses = candidates.stream()
+                .map(candidate -> modelMapperService.forResponse().map(candidate, GetAllCandidatesResponse.class))
+                .collect(Collectors.toList());
+        return new SuccessDataResult<>(responses, "Get All Candidates");
     }
     @Override
     public void add(CreateCandidateRequest createCandidateRequest) {

@@ -9,7 +9,7 @@ import hiroo.TalentSourcingSystem.core.utilities.results.DataResult;
 import java.util.List;
 
 public interface CandidateService {
-    DataResult<List<GetAllCandidatesResponse>> getAll();
+    DataResult<List<GetAllCandidatesResponse>> getAll(int pageNumber,int pageSize);
     void add(CreateCandidateRequest createCandidateRequest);
     void delete(int id);
     void update(int id,UpdateCandidateRequest updateCandidateRequest);
