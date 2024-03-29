@@ -5,6 +5,7 @@ import hiroo.TalentSourcingSystem.business.requests.CreateCandidateRequest;
 import hiroo.TalentSourcingSystem.business.requests.UpdateCandidateRequest;
 import hiroo.TalentSourcingSystem.business.requests.UpdateStatusRequest;
 import hiroo.TalentSourcingSystem.business.responses.GetAllCandidatesResponse;
+import hiroo.TalentSourcingSystem.core.utilities.results.DataResult;
 import hiroo.TalentSourcingSystem.entities.concretes.Candidate;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ import java.util.List;
 public class CandidatesController {
     private CandidateService candidateService;
     @GetMapping()
-    public List<GetAllCandidatesResponse>getAllCandidatesResponses(){
+    public DataResult<List<GetAllCandidatesResponse>> getAllCandidatesResponses(){
         return this.candidateService.getAll();
     }
     @GetMapping("/status")
@@ -44,6 +45,5 @@ public class CandidatesController {
     public void updateStatus(@PathVariable int id,@RequestBody UpdateStatusRequest updateStatusRequest){
         this.candidateService.updateStatus(id,updateStatusRequest);
     }
-
 
 }

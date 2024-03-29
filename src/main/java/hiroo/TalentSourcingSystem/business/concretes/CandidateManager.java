@@ -6,6 +6,8 @@ import hiroo.TalentSourcingSystem.business.requests.UpdateCandidateRequest;
 import hiroo.TalentSourcingSystem.business.requests.UpdateStatusRequest;
 import hiroo.TalentSourcingSystem.business.responses.GetAllCandidatesResponse;
 import hiroo.TalentSourcingSystem.core.utilities.mappers.ModelMapperService;
+import hiroo.TalentSourcingSystem.core.utilities.results.DataResult;
+import hiroo.TalentSourcingSystem.core.utilities.results.SuccessDataResult;
 import hiroo.TalentSourcingSystem.dataAccess.abstracts.CandidateRepository;
 import hiroo.TalentSourcingSystem.entities.concretes.Candidate;
 import lombok.AllArgsConstructor;
@@ -20,13 +22,13 @@ public class CandidateManager implements CandidateService {
     private CandidateRepository candidateRepository;
     private ModelMapperService modelMapperService;
     @Override
-    public List<GetAllCandidatesResponse> getAll() {
+    public DataResult<List<GetAllCandidatesResponse>> getAll() {
         List<Candidate>candidates=this.candidateRepository.findAll();
         List<GetAllCandidatesResponse>responses=candidates.stream().map(candidate ->this.modelMapperService.forResponse()
                 .map(candidate, GetAllCandidatesResponse.class) ).collect(Collectors.toList());
-        return responses;
+        SuccessDataResult<List<GetAllCandidatesResponse>> successDataResult=new SuccessDataResult<>(responses,"Get All Candidates");
+        return successDataResult;
     }
-
     @Override
     public void add(CreateCandidateRequest createCandidateRequest) {
         Candidate candidate=this.modelMapperService.forRequest().map(createCandidateRequest,Candidate.class);

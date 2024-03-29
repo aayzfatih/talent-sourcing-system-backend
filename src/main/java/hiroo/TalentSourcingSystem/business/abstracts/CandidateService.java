@@ -4,11 +4,12 @@ import hiroo.TalentSourcingSystem.business.requests.CreateCandidateRequest;
 import hiroo.TalentSourcingSystem.business.requests.UpdateCandidateRequest;
 import hiroo.TalentSourcingSystem.business.requests.UpdateStatusRequest;
 import hiroo.TalentSourcingSystem.business.responses.GetAllCandidatesResponse;
+import hiroo.TalentSourcingSystem.core.utilities.results.DataResult;
 
 import java.util.List;
 
 public interface CandidateService {
-    List<GetAllCandidatesResponse>getAll();
+    DataResult<List<GetAllCandidatesResponse>> getAll();
     void add(CreateCandidateRequest createCandidateRequest);
     void delete(int id);
     void update(int id,UpdateCandidateRequest updateCandidateRequest);
