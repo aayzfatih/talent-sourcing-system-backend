@@ -3,6 +3,7 @@ package hiroo.TalentSourcingSystem.business.concretes;
 import hiroo.TalentSourcingSystem.business.abstracts.CandidateService;
 import hiroo.TalentSourcingSystem.business.requests.CreateCandidateRequest;
 import hiroo.TalentSourcingSystem.business.requests.UpdateCandidateRequest;
+import hiroo.TalentSourcingSystem.business.requests.UpdateStatusRequest;
 import hiroo.TalentSourcingSystem.business.responses.GetAllCandidatesResponse;
 import hiroo.TalentSourcingSystem.core.utilties.mappers.ModelMapperService;
 import hiroo.TalentSourcingSystem.dataAccess.abstracts.CandidateRepository;
@@ -11,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Stack;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,8 +40,22 @@ public class CandidateManager implements CandidateService {
     }
 
     @Override
-    public void update(UpdateCandidateRequest updateCandidateRequest) {
-        Candidate candidate=this.modelMapperService.forResponse().map(updateCandidateRequest,Candidate.class);
+    public void update(int id,UpdateCandidateRequest updateCandidateRequest) {
+        Candidate candidate=this.candidateRepository.findById(id).orElseThrow();
+        candidate.setName(updateCandidateRequest.getName());
+        candidate.setSurname(updateCandidateRequest.getSurname());
+        candidate.setEmail(updateCandidateRequest.getEmail());
+        candidate.setPhoneNumber(updateCandidateRequest.getPhoneNumber());
+        candidate.setStatus(updateCandidateRequest.getStatus());
         this.candidateRepository.save(candidate);
     }
+
+    @Override
+    public void updateStatus(int id, UpdateStatusRequest updateStatusRequest) {
+        Candidate candidate=this.candidateRepository.findById(id).orElseThrow();
+        candidate.setStatus(updateStatusRequest.getStatus());
+        this.candidateRepository.save(candidate);
+    }
+
+
 }

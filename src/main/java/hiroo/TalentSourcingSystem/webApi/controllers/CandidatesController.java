@@ -3,6 +3,7 @@ package hiroo.TalentSourcingSystem.webApi.controllers;
 import hiroo.TalentSourcingSystem.business.abstracts.CandidateService;
 import hiroo.TalentSourcingSystem.business.requests.CreateCandidateRequest;
 import hiroo.TalentSourcingSystem.business.requests.UpdateCandidateRequest;
+import hiroo.TalentSourcingSystem.business.requests.UpdateStatusRequest;
 import hiroo.TalentSourcingSystem.business.responses.GetAllCandidatesResponse;
 import hiroo.TalentSourcingSystem.entities.concretes.Candidate;
 import lombok.AllArgsConstructor;
@@ -35,8 +36,13 @@ public class CandidatesController {
     public void delete(@PathVariable int id){
         this.candidateService.delete(id);
     }
-    @PutMapping("/update")
-    public void update(@RequestBody UpdateCandidateRequest updateCandidateRequest){
-        this.candidateService.update(updateCandidateRequest);
+    @PutMapping("/{id}")
+    public void update(@PathVariable int id,@RequestBody UpdateCandidateRequest updateCandidateRequest ){
+        this.candidateService.update(id,updateCandidateRequest);
     }
+    @PutMapping("/update/{id}")
+    public void updateStatus(@PathVariable int id,@RequestBody UpdateStatusRequest updateStatusRequest){
+        this.candidateService.updateStatus(id,updateStatusRequest);
+    }
+
 }
