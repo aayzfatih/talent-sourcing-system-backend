@@ -1,4 +1,4 @@
-package hiroo.TalentSourcingSystem.core.utilties.mappers;
+package hiroo.TalentSourcingSystem.core.utilities.mappers;
 
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;

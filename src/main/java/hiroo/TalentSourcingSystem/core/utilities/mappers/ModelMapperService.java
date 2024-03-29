@@ -1,4 +1,4 @@
-package hiroo.TalentSourcingSystem.core.utilties.mappers;
+package hiroo.TalentSourcingSystem.core.utilities.mappers;
 
 
 import org.modelmapper.ModelMapper;
