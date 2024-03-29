@@ -4,6 +4,7 @@ import hiroo.TalentSourcingSystem.business.abstracts.CandidateService;
 import hiroo.TalentSourcingSystem.business.requests.CreateCandidateRequest;
 import hiroo.TalentSourcingSystem.business.requests.UpdateCandidateRequest;
 import hiroo.TalentSourcingSystem.business.requests.UpdateStatusRequest;
+import hiroo.TalentSourcingSystem.business.responses.CandidateDto;
 import hiroo.TalentSourcingSystem.business.responses.GetAllCandidatesResponse;
 import hiroo.TalentSourcingSystem.core.utilities.mappers.ModelMapperService;
 import hiroo.TalentSourcingSystem.core.utilities.results.DataResult;
@@ -11,6 +12,7 @@ import hiroo.TalentSourcingSystem.core.utilities.results.SuccessDataResult;
 import hiroo.TalentSourcingSystem.dataAccess.abstracts.CandidateRepository;
 import hiroo.TalentSourcingSystem.entities.concretes.Candidate;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,13 +26,22 @@ public class CandidateManager implements CandidateService {
     private CandidateRepository candidateRepository;
     private ModelMapperService modelMapperService;
     @Override
-    public DataResult<List<GetAllCandidatesResponse>> getAll(int pageNumber, int pageSize) {
+    public DataResult<GetAllCandidatesResponse>  getAll (int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        List<Candidate> candidates = candidateRepository.findAll(pageable).getContent();
-        List<GetAllCandidatesResponse> responses = candidates.stream()
-                .map(candidate -> modelMapperService.forResponse().map(candidate, GetAllCandidatesResponse.class))
+        Page<Candidate>candidates=candidateRepository.findAll(pageable);
+        List<Candidate> listOfCandidates = candidates.getContent();
+        List<CandidateDto> response = listOfCandidates.stream()
+                .map(candidate -> modelMapperService.forResponse().map(candidate, CandidateDto.class))
                 .collect(Collectors.toList());
-        return new SuccessDataResult<>(responses, "Get All Candidates");
+        GetAllCandidatesResponse responses=new GetAllCandidatesResponse();
+        responses.setContent(response);
+        responses.setPageNo(candidates.getNumber());
+        responses.setPageSize(candidates.getSize());
+        responses.setTotalElements(candidates.getTotalElements());
+        responses.setTotalPages(candidates.getTotalPages());
+        responses.setLast(candidates.isLast());
+
+        return new SuccessDataResult<GetAllCandidatesResponse>(responses);
     }
     @Override
     public void add(CreateCandidateRequest createCandidateRequest) {

@@ -4,15 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetAllCandidatesResponse {
-    private int id;
-    private String name;
-    private String surname;
-    private String phoneNumber;
-    private String email;
-    private String status;
+    private List<CandidateDto>content;
+    private int pageNo;
+    private int pageSize;
+    private long totalElements;
+    private int totalPages;
+    private boolean last;
+
 
 }
