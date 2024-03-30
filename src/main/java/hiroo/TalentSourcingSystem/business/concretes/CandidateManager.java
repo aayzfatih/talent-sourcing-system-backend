@@ -8,7 +8,9 @@ import hiroo.TalentSourcingSystem.business.responses.CandidateDto;
 import hiroo.TalentSourcingSystem.business.responses.GetAllCandidatesResponse;
 import hiroo.TalentSourcingSystem.core.utilities.mappers.ModelMapperService;
 import hiroo.TalentSourcingSystem.core.utilities.results.DataResult;
+import hiroo.TalentSourcingSystem.core.utilities.results.Result;
 import hiroo.TalentSourcingSystem.core.utilities.results.SuccessDataResult;
+import hiroo.TalentSourcingSystem.core.utilities.results.SuccessResult;
 import hiroo.TalentSourcingSystem.dataAccess.abstracts.CandidateRepository;
 import hiroo.TalentSourcingSystem.entities.concretes.Candidate;
 import lombok.AllArgsConstructor;
@@ -26,9 +28,14 @@ public class CandidateManager implements CandidateService {
     private CandidateRepository candidateRepository;
     private ModelMapperService modelMapperService;
     @Override
-    public DataResult<GetAllCandidatesResponse>  getAll (int pageNumber, int pageSize) {
+    public DataResult<GetAllCandidatesResponse>getAll (int pageNumber, Candidate.Status status, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        Page<Candidate>candidates=candidateRepository.findAll(pageable);
+        Page<Candidate>candidates;
+        if(status!=null){
+            candidates=candidateRepository.findCandidateByStatus(status,pageable);
+        }else{
+            candidates=candidateRepository.findAll(pageable);
+        }
         List<Candidate> listOfCandidates = candidates.getContent();
         List<CandidateDto> response = listOfCandidates.stream()
                 .map(candidate -> modelMapperService.forResponse().map(candidate, CandidateDto.class))
@@ -41,21 +48,23 @@ public class CandidateManager implements CandidateService {
         responses.setTotalPages(candidates.getTotalPages());
         responses.setLast(candidates.isLast());
 
-        return new SuccessDataResult<GetAllCandidatesResponse>(responses);
+        return new SuccessDataResult<GetAllCandidatesResponse>(responses,"Get all candidates");
     }
     @Override
-    public void add(CreateCandidateRequest createCandidateRequest) {
+    public Result add(CreateCandidateRequest createCandidateRequest) {
         Candidate candidate=this.modelMapperService.forRequest().map(createCandidateRequest,Candidate.class);
         this.candidateRepository.save(candidate);
+        return new SuccessResult("Candidate added");
     }
 
     @Override
-    public void delete(int id) {
+    public Result delete(int id) {
         this.candidateRepository.deleteById(id);
+        return new SuccessResult("Candidate deleted");
     }
 
     @Override
-    public void update(int id,UpdateCandidateRequest updateCandidateRequest) {
+    public DataResult<Candidate> update(int id,UpdateCandidateRequest updateCandidateRequest) {
         Candidate candidate=this.candidateRepository.findById(id).orElseThrow();
         candidate.setName(updateCandidateRequest.getName());
         candidate.setSurname(updateCandidateRequest.getSurname());
@@ -63,13 +72,15 @@ public class CandidateManager implements CandidateService {
         candidate.setPhoneNumber(updateCandidateRequest.getPhoneNumber());
         candidate.setStatus(updateCandidateRequest.getStatus());
         this.candidateRepository.save(candidate);
+        return new SuccessDataResult<Candidate>(candidate,"The candidate with ID "+candidate.getId()+" has been updated");
     }
 
     @Override
-    public void updateStatus(int id, UpdateStatusRequest updateStatusRequest) {
+    public DataResult<Candidate> updateStatus(int id, UpdateStatusRequest updateStatusRequest) {
         Candidate candidate=this.candidateRepository.findById(id).orElseThrow();
         candidate.setStatus(updateStatusRequest.getStatus());
         this.candidateRepository.save(candidate);
+        return new SuccessDataResult<Candidate>(candidate,"The status of the candidate with ID "+candidate.getId()+" has been updated");
     }
 
 

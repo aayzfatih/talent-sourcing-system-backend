@@ -5,14 +5,16 @@ import hiroo.TalentSourcingSystem.business.requests.UpdateCandidateRequest;
 import hiroo.TalentSourcingSystem.business.requests.UpdateStatusRequest;
 import hiroo.TalentSourcingSystem.business.responses.GetAllCandidatesResponse;
 import hiroo.TalentSourcingSystem.core.utilities.results.DataResult;
+import hiroo.TalentSourcingSystem.core.utilities.results.Result;
+import hiroo.TalentSourcingSystem.entities.concretes.Candidate;
 
 import java.util.List;
 
 public interface CandidateService {
-    DataResult<GetAllCandidatesResponse>  getAll  (int pageNumber,int pageSize);
-    void add(CreateCandidateRequest createCandidateRequest);
-    void delete(int id);
-    void update(int id,UpdateCandidateRequest updateCandidateRequest);
-    void updateStatus(int id,UpdateStatusRequest updateStatusRequest);
+    DataResult<GetAllCandidatesResponse>  getAll  (int pageNumber, Candidate.Status status, int pageSize);
+    Result add(CreateCandidateRequest createCandidateRequest);
+    Result delete(int id);
+    DataResult<Candidate> update(int id,UpdateCandidateRequest updateCandidateRequest);
+    DataResult<Candidate>updateStatus(int id,UpdateStatusRequest updateStatusRequest);
 
 }

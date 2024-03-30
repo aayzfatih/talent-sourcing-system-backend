@@ -6,6 +6,7 @@ import hiroo.TalentSourcingSystem.business.requests.UpdateCandidateRequest;
 import hiroo.TalentSourcingSystem.business.requests.UpdateStatusRequest;
 import hiroo.TalentSourcingSystem.business.responses.GetAllCandidatesResponse;
 import hiroo.TalentSourcingSystem.core.utilities.results.DataResult;
+import hiroo.TalentSourcingSystem.core.utilities.results.Result;
 import hiroo.TalentSourcingSystem.entities.concretes.Candidate;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,9 +21,9 @@ import java.util.List;
 @AllArgsConstructor
 public class CandidatesController {
     private CandidateService candidateService;
-    @GetMapping()
-    public  DataResult<GetAllCandidatesResponse> getAllCandidatesResponse(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
-        return this.candidateService.getAll(page,size);
+    @GetMapping("/list")
+    public  DataResult<GetAllCandidatesResponse> getAllCandidatesResponse(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,@RequestParam(defaultValue = "") Candidate.Status status){
+        return this.candidateService.getAll(page,status,size);
     }
     @GetMapping("/status")
     public ResponseEntity<Candidate.Status[]>getStatusValues(){
@@ -30,20 +31,20 @@ public class CandidatesController {
     }
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public void add(@RequestBody CreateCandidateRequest createCandidateRequest){
-        this.candidateService.add(createCandidateRequest);
+    public Result add(@RequestBody CreateCandidateRequest createCandidateRequest){
+       return this.candidateService.add(createCandidateRequest);
     }
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id){
-        this.candidateService.delete(id);
+    public Result delete(@PathVariable int id) {
+        return this.candidateService.delete(id);
     }
     @PutMapping("/{id}")
-    public void update(@PathVariable int id,@RequestBody UpdateCandidateRequest updateCandidateRequest ){
-        this.candidateService.update(id,updateCandidateRequest);
+    public DataResult<Candidate> update(@PathVariable int id,@RequestBody UpdateCandidateRequest updateCandidateRequest ){
+      return this.candidateService.update(id,updateCandidateRequest);
     }
     @PutMapping("/update/{id}")
-    public void updateStatus(@PathVariable int id,@RequestBody UpdateStatusRequest updateStatusRequest){
-        this.candidateService.updateStatus(id,updateStatusRequest);
+    public DataResult<Candidate> updateStatus(@PathVariable int id,@RequestBody UpdateStatusRequest updateStatusRequest){
+       return this.candidateService.updateStatus(id,updateStatusRequest);
     }
 
 }
