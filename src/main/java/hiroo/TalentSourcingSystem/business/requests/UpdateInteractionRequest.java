@@ -1,23 +1,16 @@
-package hiroo.TalentSourcingSystem.business.responses;
+package hiroo.TalentSourcingSystem.business.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetInteractionByCandidateIdResponse {
-    private int id;
+public class UpdateInteractionRequest {
     private String content;
     private LocalDateTime time;
     private boolean candidateResponded;
-    private String candidateName;
-    private String candidateSurname;
-
-    private String candidateStatus;
-
 }

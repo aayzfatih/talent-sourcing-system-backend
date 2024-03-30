@@ -2,7 +2,9 @@ package hiroo.TalentSourcingSystem.business.concretes;
 
 import hiroo.TalentSourcingSystem.business.abstracts.InteractionService;
 import hiroo.TalentSourcingSystem.business.requests.CreateInteractionRequest;
+import hiroo.TalentSourcingSystem.business.requests.UpdateInteractionRequest;
 import hiroo.TalentSourcingSystem.business.responses.GetAllInteractionsResponse;
+import hiroo.TalentSourcingSystem.business.responses.GetCandidateByIdResponse;
 import hiroo.TalentSourcingSystem.business.responses.GetInteractionByCandidateIdResponse;
 import hiroo.TalentSourcingSystem.core.utilities.mappers.ModelMapperService;
 import hiroo.TalentSourcingSystem.core.utilities.results.DataResult;
@@ -39,4 +41,24 @@ public class InteractionManager implements InteractionService {
         return new SuccessDataResult<>(responses,"All interaction listed");
     }
 
+    @Override
+    public DataResult<GetInteractionByCandidateIdResponse> getCandidateInteraction(int id) {
+      Interaction interaction=this.interactionRepository.findByCandidateId(id);
+      GetInteractionByCandidateIdResponse response=this.modelMapperService.forResponse().map(interaction,GetInteractionByCandidateIdResponse.class);
+      return new SuccessDataResult<GetInteractionByCandidateIdResponse>(response,"Hello wold");
+    }
+
+    @Override
+    public Result delete(int id) {
+        this.interactionRepository.deleteById(id);
+        return new SuccessResult("Interaction has been deleted");
+    }
+
+    @Override
+    public DataResult<UpdateInteractionRequest> update(int id, UpdateInteractionRequest updateInteractionRequest) {
+        Interaction interaction = this.interactionRepository.findById(id).orElseThrow();
+        this.modelMapperService.forRequest().map(updateInteractionRequest, interaction);
+        Interaction updatedInteraction = this.interactionRepository.save(interaction);
+        return new SuccessDataResult<UpdateInteractionRequest>(updateInteractionRequest, "Interaction with id " + id + " has been updated");
+    }
 }

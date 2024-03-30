@@ -42,7 +42,7 @@ public class CandidatesController {
         return this.candidateService.delete(id);
     }
     @PutMapping("/{id}")
-    public DataResult<Candidate> update(@PathVariable int id,@RequestBody UpdateCandidateRequest updateCandidateRequest ){
+    public DataResult<UpdateCandidateRequest> update(@PathVariable int id,@RequestBody UpdateCandidateRequest updateCandidateRequest ){
       return this.candidateService.update(id,updateCandidateRequest);
     }
     @PutMapping("/update/{id}")

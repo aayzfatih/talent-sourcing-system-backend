@@ -76,15 +76,11 @@ public class CandidateManager implements CandidateService {
     }
 
     @Override
-    public DataResult<Candidate> update(int id,UpdateCandidateRequest updateCandidateRequest) {
+    public DataResult<UpdateCandidateRequest> update(int id,UpdateCandidateRequest updateCandidateRequest) {
         Candidate candidate=this.candidateRepository.findById(id).orElseThrow();
-        candidate.setName(updateCandidateRequest.getName());
-        candidate.setSurname(updateCandidateRequest.getSurname());
-        candidate.setEmail(updateCandidateRequest.getEmail());
-        candidate.setPhoneNumber(updateCandidateRequest.getPhoneNumber());
-        candidate.setStatus(updateCandidateRequest.getStatus());
+        this.modelMapperService.forRequest().map(updateCandidateRequest,Candidate.class);
         this.candidateRepository.save(candidate);
-        return new SuccessDataResult<Candidate>(candidate,"The candidate with ID "+candidate.getId()+" has been updated");
+        return new SuccessDataResult<UpdateCandidateRequest>(updateCandidateRequest,"The candidate with ID "+id+" has been updated");
     }
 
     @Override
