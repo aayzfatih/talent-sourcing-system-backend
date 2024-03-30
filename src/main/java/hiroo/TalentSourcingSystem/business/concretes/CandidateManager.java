@@ -6,13 +6,11 @@ import hiroo.TalentSourcingSystem.business.requests.UpdateCandidateRequest;
 import hiroo.TalentSourcingSystem.business.requests.UpdateStatusRequest;
 import hiroo.TalentSourcingSystem.business.responses.CandidateDto;
 import hiroo.TalentSourcingSystem.business.responses.GetAllCandidatesResponse;
+import hiroo.TalentSourcingSystem.business.responses.GetCandidateByIdResponse;
 import hiroo.TalentSourcingSystem.core.utilities.mappers.ModelMapperService;
-import hiroo.TalentSourcingSystem.core.utilities.results.DataResult;
-import hiroo.TalentSourcingSystem.core.utilities.results.Result;
-import hiroo.TalentSourcingSystem.core.utilities.results.SuccessDataResult;
-import hiroo.TalentSourcingSystem.core.utilities.results.SuccessResult;
+import hiroo.TalentSourcingSystem.core.utilities.results.*;
 import hiroo.TalentSourcingSystem.dataAccess.abstracts.CandidateRepository;
-import hiroo.TalentSourcingSystem.entities.concretes.Candidate;
+import hiroo.TalentSourcingSystem.core.utilities.results.concretes.Candidate;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -50,6 +48,20 @@ public class CandidateManager implements CandidateService {
 
         return new SuccessDataResult<GetAllCandidatesResponse>(responses,"Get all candidates");
     }
+
+    @Override
+    public DataResult<GetCandidateByIdResponse> getCandidateById(int id) {
+        if(this.candidateRepository.existsById(id)){
+            Candidate candidate=candidateRepository.findById(id).orElseThrow();
+            GetCandidateByIdResponse response=this.modelMapperService.forResponse().map(candidate,GetCandidateByIdResponse.class);
+            return new SuccessDataResult<GetCandidateByIdResponse>(response,"Candidate of ID:"+candidate.getId());
+        }
+        else {
+            return new ErrorDataResult<>(null,"No candidates with ID:"+id+" were found");
+        }
+
+    }
+
     @Override
     public Result add(CreateCandidateRequest createCandidateRequest) {
         Candidate candidate=this.modelMapperService.forRequest().map(createCandidateRequest,Candidate.class);

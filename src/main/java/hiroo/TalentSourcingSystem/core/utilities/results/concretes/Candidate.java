@@ -1,4 +1,4 @@
-package hiroo.TalentSourcingSystem.entities.concretes;
+package hiroo.TalentSourcingSystem.core.utilities.results.concretes;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

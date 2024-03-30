@@ -5,15 +5,14 @@ import hiroo.TalentSourcingSystem.business.requests.CreateCandidateRequest;
 import hiroo.TalentSourcingSystem.business.requests.UpdateCandidateRequest;
 import hiroo.TalentSourcingSystem.business.requests.UpdateStatusRequest;
 import hiroo.TalentSourcingSystem.business.responses.GetAllCandidatesResponse;
+import hiroo.TalentSourcingSystem.business.responses.GetCandidateByIdResponse;
 import hiroo.TalentSourcingSystem.core.utilities.results.DataResult;
 import hiroo.TalentSourcingSystem.core.utilities.results.Result;
-import hiroo.TalentSourcingSystem.entities.concretes.Candidate;
+import hiroo.TalentSourcingSystem.core.utilities.results.concretes.Candidate;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin()
@@ -24,6 +23,10 @@ public class CandidatesController {
     @GetMapping("/list")
     public  DataResult<GetAllCandidatesResponse> getAllCandidatesResponse(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,@RequestParam(defaultValue = "") Candidate.Status status){
         return this.candidateService.getAll(page,status,size);
+    }
+    @GetMapping("/list/{id}")
+    public DataResult<GetCandidateByIdResponse> GetCandidateById(@PathVariable int id){
+        return this.candidateService.getCandidateById(id);
     }
     @GetMapping("/status")
     public ResponseEntity<Candidate.Status[]>getStatusValues(){

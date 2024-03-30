@@ -1,6 +1,5 @@
-package hiroo.TalentSourcingSystem.business.requests;
+package hiroo.TalentSourcingSystem.business.responses;
 
-import hiroo.TalentSourcingSystem.core.utilities.results.concretes.Candidate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,10 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateCandidateRequest {
+public class GetCandidateByIdResponse {
+    private int id;
     private String name;
     private String surname;
     private String phoneNumber;
     private String email;
-    private Candidate.Status status;
+    private String status;
 }
