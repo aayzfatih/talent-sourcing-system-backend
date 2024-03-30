@@ -1,6 +1,6 @@
 package hiroo.TalentSourcingSystem.dataAccess.abstracts;
 
-import hiroo.TalentSourcingSystem.core.utilities.results.concretes.Candidate;
+import hiroo.TalentSourcingSystem.entities.concretes.Candidate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

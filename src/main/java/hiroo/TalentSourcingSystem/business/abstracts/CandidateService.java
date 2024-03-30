@@ -7,7 +7,7 @@ import hiroo.TalentSourcingSystem.business.responses.GetAllCandidatesResponse;
 import hiroo.TalentSourcingSystem.business.responses.GetCandidateByIdResponse;
 import hiroo.TalentSourcingSystem.core.utilities.results.DataResult;
 import hiroo.TalentSourcingSystem.core.utilities.results.Result;
-import hiroo.TalentSourcingSystem.core.utilities.results.concretes.Candidate;
+import hiroo.TalentSourcingSystem.entities.concretes.Candidate;
 
 public interface CandidateService {
     DataResult<GetAllCandidatesResponse>  getAll  (int pageNumber, Candidate.Status status, int pageSize);

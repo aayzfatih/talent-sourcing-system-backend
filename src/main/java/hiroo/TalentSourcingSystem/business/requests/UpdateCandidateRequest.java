@@ -1,6 +1,6 @@
 package hiroo.TalentSourcingSystem.business.requests;
 
-import hiroo.TalentSourcingSystem.core.utilities.results.concretes.Candidate;
+import hiroo.TalentSourcingSystem.entities.concretes.Candidate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

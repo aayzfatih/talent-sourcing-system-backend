@@ -10,7 +10,7 @@ import hiroo.TalentSourcingSystem.business.responses.GetCandidateByIdResponse;
 import hiroo.TalentSourcingSystem.core.utilities.mappers.ModelMapperService;
 import hiroo.TalentSourcingSystem.core.utilities.results.*;
 import hiroo.TalentSourcingSystem.dataAccess.abstracts.CandidateRepository;
-import hiroo.TalentSourcingSystem.core.utilities.results.concretes.Candidate;
+import hiroo.TalentSourcingSystem.entities.concretes.Candidate;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
