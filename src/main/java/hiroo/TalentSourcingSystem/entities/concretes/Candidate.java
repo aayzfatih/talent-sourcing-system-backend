@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 
 @Table(name = "Candidate")
 @Data
@@ -32,5 +34,8 @@ public class Candidate {
     @Column(name="candidate_status")
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @OneToMany(mappedBy = "candidate")
+    private List<Interaction>interactions;
 
 }
