@@ -16,7 +16,5 @@ public class GetInteractionByCandidateIdResponse {
     private boolean candidateResponded;
     private String candidateName;
     private String candidateSurname;
-
     private String candidateStatus;
-
 }

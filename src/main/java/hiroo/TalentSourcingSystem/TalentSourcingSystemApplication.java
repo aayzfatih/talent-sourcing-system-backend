@@ -1,6 +1,7 @@
 package hiroo.TalentSourcingSystem;
 
 import hiroo.TalentSourcingSystem.core.utilities.exceptions.BusinessException;
+import hiroo.TalentSourcingSystem.core.utilities.exceptions.NotFoundException;
 import hiroo.TalentSourcingSystem.core.utilities.exceptions.ProblemDetails;
 import hiroo.TalentSourcingSystem.core.utilities.exceptions.ValidationProblemDetails;
 import org.modelmapper.ModelMapper;
@@ -8,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -32,6 +34,13 @@ public class TalentSourcingSystemApplication {
 		return problemDetails;
 	}
 	@ExceptionHandler
+	@ResponseStatus(code= HttpStatus.NOT_FOUND)
+	public ProblemDetails handleNotFoundException(NotFoundException notFoundException){
+		ProblemDetails problemDetails=new ProblemDetails();
+		problemDetails.setMessage(notFoundException.getMessage());
+		return problemDetails;
+	}
+	@ExceptionHandler
 	@ResponseStatus(code= HttpStatus.BAD_REQUEST)
 	public ProblemDetails handleValidationException(MethodArgumentNotValidException methodArgumentNotValidException){
 		ValidationProblemDetails validationProblemDetails=new ValidationProblemDetails();
@@ -44,7 +53,13 @@ public class TalentSourcingSystemApplication {
 		}
 		return validationProblemDetails;
 	}
-
+	@ExceptionHandler
+	@ResponseStatus(code= HttpStatus.BAD_REQUEST)
+	public ProblemDetails NotReadableException(HttpMessageNotReadableException httpMessageNotReadableException){
+		ProblemDetails problemDetails=new ProblemDetails();
+		problemDetails.setMessage(httpMessageNotReadableException.getMessage());
+		return problemDetails;
+	}
 	@Bean
 	public ModelMapper getModelMapper(){
 		return new ModelMapper();

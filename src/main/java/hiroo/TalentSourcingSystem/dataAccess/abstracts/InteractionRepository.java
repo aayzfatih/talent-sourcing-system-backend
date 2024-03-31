@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface InteractionRepository extends JpaRepository<Interaction,Integer> {
-    Interaction findByCandidateId(int candidateId);
+    Interaction findInteractionByCandidateId(int candidateId);
+    boolean existsByCandidateId(int id);
 }

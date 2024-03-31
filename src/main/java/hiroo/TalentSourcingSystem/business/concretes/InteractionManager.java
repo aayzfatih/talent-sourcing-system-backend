@@ -5,6 +5,7 @@ import hiroo.TalentSourcingSystem.business.requests.CreateInteractionRequest;
 import hiroo.TalentSourcingSystem.business.requests.UpdateInteractionRequest;
 import hiroo.TalentSourcingSystem.business.responses.GetAllInteractionsResponse;
 import hiroo.TalentSourcingSystem.business.responses.GetInteractionByCandidateIdResponse;
+import hiroo.TalentSourcingSystem.business.rules.InteractionBusinessRules;
 import hiroo.TalentSourcingSystem.core.utilities.mappers.ModelMapperService;
 import hiroo.TalentSourcingSystem.core.utilities.results.DataResult;
 import hiroo.TalentSourcingSystem.core.utilities.results.Result;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 public class InteractionManager implements InteractionService {
     private InteractionRepository interactionRepository;
     private ModelMapperService modelMapperService;
+    private InteractionBusinessRules interactionBusinessRules;
 
     @Override
     public Result add(CreateInteractionRequest createInteractionRequest) {
@@ -42,7 +44,8 @@ public class InteractionManager implements InteractionService {
 
     @Override
     public DataResult<GetInteractionByCandidateIdResponse> getCandidateInteraction(int id) {
-      Interaction interaction=this.interactionRepository.findByCandidateId(id);
+        this.interactionBusinessRules.checkIfCandidateIdExist(id);
+      Interaction interaction=this.interactionRepository.findInteractionByCandidateId(id);
       GetInteractionByCandidateIdResponse response=this.modelMapperService.forResponse().map(interaction,GetInteractionByCandidateIdResponse.class);
       return new SuccessDataResult<GetInteractionByCandidateIdResponse>(response,"Hello wold");
     }
