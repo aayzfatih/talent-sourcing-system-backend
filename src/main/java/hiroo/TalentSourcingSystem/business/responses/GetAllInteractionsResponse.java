@@ -13,8 +13,7 @@ import java.time.LocalDateTime;
 public class GetAllInteractionsResponse {
     private int id;
     private String content;
-    private LocalDateTime time;
-    private boolean candidateResponded;
+    private LocalDateTime createdTime;
     private String candidateName;
     private int candidateId;
     private Candidate.Status candidateStatus;

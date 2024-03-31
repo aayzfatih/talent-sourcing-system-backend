@@ -25,10 +25,12 @@ public class Interaction {
     @Column(name = "content")
     private String content;
 
-    @Column(name = "time")
-    private LocalDateTime time;
+    @Column(name = "created_time")
+    private LocalDateTime createdTime;
 
-    @Column(name = "candidate_responded")
-    private boolean candidateResponded;
+    @Column(name = "updated_time")
+    private LocalDateTime updatedTime;
+
+
 
 }

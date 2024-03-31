@@ -13,6 +13,5 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class UpdateInteractionRequest {
     private String content;
-    private LocalDateTime time;
-    private boolean candidateResponded;
+    private LocalDateTime updatedTime;
 }

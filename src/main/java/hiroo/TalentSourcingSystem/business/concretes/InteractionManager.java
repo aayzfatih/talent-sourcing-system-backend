@@ -58,7 +58,7 @@ public class InteractionManager implements InteractionService {
 
     @Override
     public DataResult<UpdateInteractionRequest> update(int id, UpdateInteractionRequest updateInteractionRequest) {
-               Interaction interaction = this.interactionRepository.findById(id).orElseThrow();
+        Interaction interaction = this.interactionRepository.findById(id).orElseThrow();
         this.modelMapperService.forRequest().map(updateInteractionRequest, interaction);
         Interaction updatedInteraction = this.interactionRepository.save(interaction);
         return new SuccessDataResult<UpdateInteractionRequest>(updateInteractionRequest, "Interaction with id " + id + " has been updated");

@@ -17,7 +17,7 @@ public class CreateInteractionRequest {
     private String content;
     @NotNull
     @NotBlank
-    private LocalDateTime time;
+    private LocalDateTime createdTime;
     @NotNull
     @NotBlank
     private boolean candidateResponded;
