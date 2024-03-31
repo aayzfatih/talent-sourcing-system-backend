@@ -6,7 +6,6 @@ import hiroo.TalentSourcingSystem.business.responses.GetAllInteractionsResponse;
 import hiroo.TalentSourcingSystem.business.responses.GetInteractionByCandidateIdResponse;
 import hiroo.TalentSourcingSystem.core.utilities.results.DataResult;
 import hiroo.TalentSourcingSystem.core.utilities.results.Result;
-import hiroo.TalentSourcingSystem.entities.concretes.Interaction;
 
 import java.util.List;
 

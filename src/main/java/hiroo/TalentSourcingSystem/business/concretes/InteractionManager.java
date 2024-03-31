@@ -4,7 +4,6 @@ import hiroo.TalentSourcingSystem.business.abstracts.InteractionService;
 import hiroo.TalentSourcingSystem.business.requests.CreateInteractionRequest;
 import hiroo.TalentSourcingSystem.business.requests.UpdateInteractionRequest;
 import hiroo.TalentSourcingSystem.business.responses.GetAllInteractionsResponse;
-import hiroo.TalentSourcingSystem.business.responses.GetCandidateByIdResponse;
 import hiroo.TalentSourcingSystem.business.responses.GetInteractionByCandidateIdResponse;
 import hiroo.TalentSourcingSystem.core.utilities.mappers.ModelMapperService;
 import hiroo.TalentSourcingSystem.core.utilities.results.DataResult;

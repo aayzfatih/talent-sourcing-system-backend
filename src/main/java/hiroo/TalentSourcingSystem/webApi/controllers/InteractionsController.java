@@ -7,7 +7,6 @@ import hiroo.TalentSourcingSystem.business.responses.GetAllInteractionsResponse;
 import hiroo.TalentSourcingSystem.business.responses.GetInteractionByCandidateIdResponse;
 import hiroo.TalentSourcingSystem.core.utilities.results.DataResult;
 import hiroo.TalentSourcingSystem.core.utilities.results.Result;
-import hiroo.TalentSourcingSystem.entities.concretes.Interaction;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +19,7 @@ import java.util.List;
 public class InteractionsController {
     private InteractionService interactionService;
 
-    @PostMapping("/add")
+    @PostMapping()
     public Result add(@RequestBody CreateInteractionRequest createInteractionRequest){
         return this.interactionService.add(createInteractionRequest);
     }

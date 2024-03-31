@@ -1,5 +1,7 @@
 package hiroo.TalentSourcingSystem.business.requests;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,9 +10,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateCandidateRequest {
+    @NotNull
+    @NotBlank
     private String name;
+    @NotNull
+    @NotBlank
     private String surname;
+    @NotNull
+    @NotBlank
     private String phoneNumber;
+    @NotNull
+    @NotBlank
     private String email;
+    @NotNull
+    @NotBlank
     private String status;
 }
