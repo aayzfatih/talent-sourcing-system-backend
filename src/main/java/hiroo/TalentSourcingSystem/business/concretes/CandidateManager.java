@@ -11,10 +11,12 @@ import hiroo.TalentSourcingSystem.core.utilities.mappers.ModelMapperService;
 import hiroo.TalentSourcingSystem.core.utilities.results.*;
 import hiroo.TalentSourcingSystem.dataAccess.abstracts.CandidateRepository;
 import hiroo.TalentSourcingSystem.entities.concretes.Candidate;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -76,15 +78,22 @@ public class CandidateManager implements CandidateService {
     }
 
     @Override
-    public DataResult<UpdateCandidateRequest> update(int id,UpdateCandidateRequest updateCandidateRequest) {
-        Candidate candidate=this.candidateRepository.findById(id).orElseThrow();
-        this.modelMapperService.forRequest().map(updateCandidateRequest,Candidate.class);
-        this.candidateRepository.save(candidate);
-        return new SuccessDataResult<UpdateCandidateRequest>(updateCandidateRequest,"The candidate with ID "+id+" has been updated");
+    public DataResult<Candidate> update(int id,UpdateCandidateRequest updateCandidateRequest) {
+        Candidate candidate = candidateRepository.findById(id).orElseThrow();
+
+        candidate.setName(updateCandidateRequest.getName());
+        candidate.setSurname(updateCandidateRequest.getSurname());
+        candidate.setPhoneNumber(updateCandidateRequest.getPhoneNumber());
+        candidate.setEmail(updateCandidateRequest.getEmail());
+        candidate.setStatus(updateCandidateRequest.getStatus());
+
+        Candidate savedCandidate = candidateRepository.save(candidate);
+        return new SuccessDataResult<>(savedCandidate,"The candidate with Id: "+id+" has been updated");
     }
 
     @Override
     public DataResult<Candidate> updateStatus(int id, UpdateStatusRequest updateStatusRequest) {
+
         Candidate candidate=this.candidateRepository.findById(id).orElseThrow();
         candidate.setStatus(updateStatusRequest.getStatus());
         this.candidateRepository.save(candidate);

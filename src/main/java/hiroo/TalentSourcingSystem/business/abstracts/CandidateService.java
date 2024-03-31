@@ -8,13 +8,14 @@ import hiroo.TalentSourcingSystem.business.responses.GetCandidateByIdResponse;
 import hiroo.TalentSourcingSystem.core.utilities.results.DataResult;
 import hiroo.TalentSourcingSystem.core.utilities.results.Result;
 import hiroo.TalentSourcingSystem.entities.concretes.Candidate;
+import org.springframework.http.ResponseEntity;
 
 public interface CandidateService {
     DataResult<GetAllCandidatesResponse>getAll  (int pageNumber, Candidate.Status status, int pageSize);
     DataResult<GetCandidateByIdResponse>getCandidateById(int id);
     Result add(CreateCandidateRequest createCandidateRequest);
     Result delete(int id);
-    DataResult<UpdateCandidateRequest> update(int id,UpdateCandidateRequest updateCandidateRequest);
+    DataResult<Candidate> update(int id, UpdateCandidateRequest updateCandidateRequest);
     DataResult<Candidate>updateStatus(int id,UpdateStatusRequest updateStatusRequest);
 
 }
