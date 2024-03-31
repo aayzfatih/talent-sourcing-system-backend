@@ -28,6 +28,7 @@ public class InteractionManager implements InteractionService {
 
     @Override
     public Result add(CreateInteractionRequest createInteractionRequest) {
+        this.interactionBusinessRules.checkIfInteractionExist(createInteractionRequest.getCandidateId());
         Interaction interaction=this.modelMapperService.forRequest().map(createInteractionRequest,Interaction.class);
         this.interactionRepository.save(interaction);
         return new SuccessResult("Interaction added");
@@ -44,7 +45,7 @@ public class InteractionManager implements InteractionService {
 
     @Override
     public DataResult<GetInteractionByCandidateIdResponse> getCandidateInteraction(int id) {
-        this.interactionBusinessRules.checkIfCandidateIdExist(id);
+      this.interactionBusinessRules.checkIfCandidateIdExist(id);
       Interaction interaction=this.interactionRepository.findInteractionByCandidateId(id);
       GetInteractionByCandidateIdResponse response=this.modelMapperService.forResponse().map(interaction,GetInteractionByCandidateIdResponse.class);
       return new SuccessDataResult<GetInteractionByCandidateIdResponse>(response,"Hello wold");

@@ -15,4 +15,9 @@ public class InteractionBusinessRules {
             throw new NotFoundException("There is no interaction.You need to add interaction");
         }
     }
+    public void checkIfInteractionExist(int id){
+        if(this.interactionRepository.existsByCandidateId(id)){
+           throw new BusinessException("This candidate has been interacted with before. Please update on the viewing page");
+        }
+    }
 }
