@@ -9,6 +9,7 @@ import hiroo.TalentSourcingSystem.business.responses.GetCandidateByIdResponse;
 import hiroo.TalentSourcingSystem.core.utilities.results.DataResult;
 import hiroo.TalentSourcingSystem.core.utilities.results.Result;
 import hiroo.TalentSourcingSystem.entities.concretes.Candidate;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +38,7 @@ public class CandidatesController {
     }
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public Result add(@RequestBody CreateCandidateRequest createCandidateRequest){
+    public Result add(@RequestBody()@Valid() CreateCandidateRequest createCandidateRequest){
        return this.candidateService.add(createCandidateRequest);
     }
     @DeleteMapping("/{id}")
@@ -47,11 +48,11 @@ public class CandidatesController {
     }
     @PutMapping("/{id}")
 
-    public DataResult<Candidate> update(@PathVariable int id,@RequestBody UpdateCandidateRequest updateCandidateRequest ){
+    public DataResult<Candidate> update(@PathVariable int id,@RequestBody() UpdateCandidateRequest updateCandidateRequest ){
       return this.candidateService.update(id,updateCandidateRequest);
     }
     @PutMapping("/status/{id}")
-    public DataResult<Candidate> updateStatus(@PathVariable int id,@RequestBody UpdateStatusRequest updateStatusRequest){
+    public DataResult<Candidate> updateStatus(@PathVariable int id,@RequestBody() UpdateStatusRequest updateStatusRequest){
        return this.candidateService.updateStatus(id,updateStatusRequest);
     }
 

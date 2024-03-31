@@ -7,6 +7,7 @@ import hiroo.TalentSourcingSystem.business.requests.UpdateStatusRequest;
 import hiroo.TalentSourcingSystem.business.responses.CandidateDto;
 import hiroo.TalentSourcingSystem.business.responses.GetAllCandidatesResponse;
 import hiroo.TalentSourcingSystem.business.responses.GetCandidateByIdResponse;
+import hiroo.TalentSourcingSystem.business.rules.CandidateBusinessRules;
 import hiroo.TalentSourcingSystem.core.utilities.mappers.ModelMapperService;
 import hiroo.TalentSourcingSystem.core.utilities.results.*;
 import hiroo.TalentSourcingSystem.dataAccess.abstracts.CandidateRepository;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 public class CandidateManager implements CandidateService {
     private CandidateRepository candidateRepository;
     private ModelMapperService modelMapperService;
+    private CandidateBusinessRules candidateBusinessRules;
     @Override
     public DataResult<GetAllCandidatesResponse>getAll (int pageNumber, Candidate.Status status, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
@@ -64,6 +66,7 @@ public class CandidateManager implements CandidateService {
 
     @Override
     public Result add(CreateCandidateRequest createCandidateRequest) {
+        this.candidateBusinessRules.checkIfEmailExists(createCandidateRequest.getEmail());
         Candidate candidate=this.modelMapperService.forRequest().map(createCandidateRequest,Candidate.class);
         this.candidateRepository.save(candidate);
         return new SuccessResult("Candidate added");
